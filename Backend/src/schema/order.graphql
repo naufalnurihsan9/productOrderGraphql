@@ -11,6 +11,7 @@ type Order {
 type Mutation {
   getDetailOrders(id: Int): Order
   CreateOrders(productid: Int, quantity: Int, price: Int, Order_id: Int): Message
+  deleteOrder(idOrder: Int, idOrderDetail: Int): Message
 }
 
 type Message {

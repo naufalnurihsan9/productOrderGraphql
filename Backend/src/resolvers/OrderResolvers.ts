@@ -5,6 +5,10 @@ var messageorder = {
   message: "Berhasil Tambah Order",
 };
 
+var messageHapus = {
+  message: "Berhasil Hapus Order",
+};
+
 const myuuid = uuidv4();
 
 const OrderResolvers = {
@@ -40,6 +44,24 @@ const OrderResolvers = {
 
       if (!createOrder && !createOrderDetails) return null;
       return messageorder;
+    },
+
+    // Delete Product
+    deleteOrder: async (_parent: any, { idOrder, idOrderDetail }: any) => {
+      let delOrder = await order.destroy({
+        where: {
+          id: idOrder,
+        },
+      });
+
+      let delOrderDetail = await orderdetail.destroy({
+        where: {
+          id: idOrderDetail,
+        },
+      });
+
+      if (!delOrder && !delOrderDetail) return null;
+      return messageHapus;
     },
   },
 };

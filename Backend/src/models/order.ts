@@ -1,11 +1,11 @@
-import * as Sequelize from 'sequelize';
-import { DataTypes, Model, Optional } from 'sequelize';
-import type { orderdetail, orderdetailId } from './orderdetail';
+import * as Sequelize from "sequelize";
+import { DataTypes, Model, Optional } from "sequelize";
+import type { orderdetail, orderdetailId } from "./orderdetail";
 
 export interface orderAttributes {
   id: number;
   transcode: string;
-  created: Date;
+  created: string;
 }
 
 export type orderPk = "id";
@@ -16,7 +16,7 @@ export type orderCreationAttributes = Optional<orderAttributes, orderOptionalAtt
 export class order extends Model<orderAttributes, orderCreationAttributes> implements orderAttributes {
   id!: number;
   transcode!: string;
-  created!: Date;
+  created!: string;
 
   // order hasMany orderdetail via Order_id
   orderdetails!: orderdetail[];
@@ -32,35 +32,36 @@ export class order extends Model<orderAttributes, orderCreationAttributes> imple
   countOrderdetails!: Sequelize.HasManyCountAssociationsMixin;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof order {
-    return order.init({
-    id: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    transcode: {
-      type: DataTypes.STRING(80),
-      allowNull: false
-    },
-    created: {
-      type: DataTypes.DATE,
-      allowNull: false
-    }
-  }, {
-    sequelize,
-    tableName: 'order',
-    timestamps: false,
-    indexes: [
+    return order.init(
       {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
+        id: {
+          autoIncrement: true,
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          primaryKey: true,
+        },
+        transcode: {
+          type: DataTypes.STRING(80),
+          allowNull: false,
+        },
+        created: {
+          type: DataTypes.DATE,
+          allowNull: false,
+        },
       },
-    ]
-  });
+      {
+        sequelize,
+        tableName: "order",
+        timestamps: false,
+        indexes: [
+          {
+            name: "PRIMARY",
+            unique: true,
+            using: "BTREE",
+            fields: [{ name: "id" }],
+          },
+        ],
+      }
+    );
   }
 }

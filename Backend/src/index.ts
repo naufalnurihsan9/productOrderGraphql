@@ -60,6 +60,28 @@ const resolvers = {
       if (!delProduct) return null;
       return messageHapus;
     },
+
+    updateProduct: async (_parent: any, { id, name, stock, price }: any) => {
+      const now = new Date();
+      const deadline = now;
+      deadline.setDate(now.getDate() + 4);
+
+      const updateProduct: productCreationAttributes = {
+        name: name,
+        stock: stock,
+        price: price,
+        created: now.toDateString(),
+      };
+
+      const updatedata = await product.update(updateProduct, {
+        where: {
+          id: id,
+        },
+      });
+
+      if (!updatedata) return null;
+      return updatedata;
+    },
   },
 };
 

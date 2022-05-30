@@ -17,6 +17,10 @@ const sequalize = new Sequelize(process.env.DB_NAME as string, process.env.DB_US
 // import models into sequalize instance
 initModels(sequalize);
 
+var messageHapus = {
+  message: "Berhasil Hapus Data",
+};
+
 const resolvers = {
   Query: {
     products: async () => await product.findAll(),
@@ -27,6 +31,7 @@ const resolvers = {
     getDetailProduct: async (_parent: any, { id }: any) => {
       return await product.findByPk(id);
     },
+
     //Create Product
     createProduct: async (_parent: any, { name, stock, price }: any) => {
       const now = new Date();
@@ -43,6 +48,17 @@ const resolvers = {
 
       if (!createProduct) return null;
       return newProduct;
+    },
+
+    // Delete Todos
+    deleteProduct: async (_parent: any, { id }: any) => {
+      let delProduct = await product.destroy({
+        where: {
+          id: id,
+        },
+      });
+      if (!delProduct) return null;
+      return messageHapus;
     },
   },
 };

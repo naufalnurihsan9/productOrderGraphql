@@ -1,0 +1,11 @@
+type Query {
+  orderDetails: [Orders!]!
+}
+
+type Orders {
+  id: Int
+  productid: Int
+  quantity: String
+  price: Float
+  Order_id: Int
+}

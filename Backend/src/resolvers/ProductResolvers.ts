@@ -33,7 +33,7 @@ const Productresolvers = {
       return newProduct;
     },
 
-    // Delete Todos
+    // Delete Product
     deleteProduct: async (_parent: any, { id }: any) => {
       let delProduct = await product.destroy({
         where: {

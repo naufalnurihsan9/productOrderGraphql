@@ -7,3 +7,12 @@ type Order {
   transcode: String
   created: String
 }
+
+type Mutation {
+  getDetailOrders(id: Int): Order
+  CreateOrders(productid: Int, quantity: Int, price: Int, Order_id: Int): Message
+}
+
+type Message {
+  message: String
+}
